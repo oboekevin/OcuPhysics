@@ -6,7 +6,7 @@ TARGET := nw-demo_bindings
 LDFLAGS_Debug := \
 	-Wl,-search_paths_first \
 	-mmacosx-version-min=10.5 \
-	-arch i386 \
+	-arch x86_64 \
 	-L$(builddir)
 
 LIBTOOLFLAGS_Debug := \
@@ -15,7 +15,7 @@ LIBTOOLFLAGS_Debug := \
 LDFLAGS_Release := \
 	-Wl,-search_paths_first \
 	-mmacosx-version-min=10.5 \
-	-arch i386 \
+	-arch x86_64 \
 	-L$(builddir)
 
 LIBTOOLFLAGS_Release := \

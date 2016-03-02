@@ -334,8 +334,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
 endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
-cmd_regen_makefile = cd $(srcdir); /usr/local/lib/node_modules/nw-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." "-I/Volumes/drive/OcuPhysics/Last year's code/Code Git Repository/build/config.gypi" -I/usr/local/lib/node_modules/nw-gyp/addon.gypi -I/Users/sherrywang/.nw-gyp/0.8.6/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/sherrywang/.nw-gyp/0.8.6" "-Dmodule_root_dir=/Volumes/drive/OcuPhysics/Last year's code/Code Git Repository" binding.gyp
-Makefile: $(srcdir)/../../../../../Users/sherrywang/.nw-gyp/0.8.6/common.gypi $(srcdir)/../../../../../usr/local/lib/node_modules/nw-gyp/addon.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp
+cmd_regen_makefile = cd $(srcdir); /usr/local/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." "-I/Volumes/drive/OcuPhysics/2015/Code Git Repository/build/config.gypi" -I/usr/local/lib/node_modules/npm/node_modules/node-gyp/addon.gypi -I/Users/sherrywang/.node-gyp/0.10.40/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/sherrywang/.node-gyp/0.10.40" "-Dmodule_root_dir=/Volumes/drive/OcuPhysics/2015/Code Git Repository" binding.gyp
+Makefile: $(srcdir)/../../../../../usr/local/lib/node_modules/npm/node_modules/node-gyp/addon.gypi $(srcdir)/../../../../../Users/sherrywang/.node-gyp/0.10.40/common.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp
 	$(call do_cmd,regen_makefile)
 
 # "all" is a concatenation of the "all" targets from all the included
