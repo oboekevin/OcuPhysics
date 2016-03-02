@@ -1,7 +1,7 @@
 OcuPhysics
 ===========
 
-Model electric field vectors with Three.js and the Oculus Rift, with integrated user interaction via the Leap Motion Controller.
+Model electric field vectors with Three.js and Oculus Rift, with integrated user interaction via the Leap Motion Controller.
 
 ## <a name="setup"></a>Environment Setup
 
@@ -19,17 +19,12 @@ The following steps will set up the environment for the 2016 project, and is com
 
 ### some possible errors (Windows):
 
-* missing winsock2.h
-
-This is probably an error with VS. Reinstall with more of the things it wants you to install that you didn't think you needed.
-
 * WebGL will not render
-
-Copy "d3dcompiler_43.dll" and "D3DX9_43.dll" into your node-webkit directory. You should be able to locate these files on your computer through a simple search.
+Copy d3dcompiler_43.dll and D3DX9_43.dll into your node-webkit directory. These files should already be on your computer.
 
 ### Mac OSX:
 
-We tried to set up the environment on Yosmite, but got mach-o errors, i.e. mismatching architecture. The easy solution is to use Windows. The hard solution is to make sure everything is the same architecture; 32-bit is probably going to be a better bet, but installers will want to give you 64-bit.
+We tried to set up the environment on Yosmite, but got mach-o errors, i.e. mismatching architecture. The easy solution is to use Windows. The hard solution is to make sure everything is the same architecture; 32-bit is going to be a better bet, but installers will want to give you 64-bit.
 
 ### Gentoo (TJ computers):
 
