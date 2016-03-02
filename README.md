@@ -25,7 +25,7 @@ Copy d3dcompiler_43.dll and D3DX9_43.dll into your node-webkit directory. These 
 
 ### Mac OSX:
 
-We tried to set up the environment on Yosmite, but got mach-o errors, i.e. mismatching architecture. The easy solution is to use Windows. The hard solution is to make sure everything is the same architecture; 32-bit is going to be a better bet, but installers will want to give you 64-bit.
+We tried to set up the environment on Yosmite, but got mach-o errors, i.e. mismatching architecture. The easy solution is to use Windows. The hard solution is to make sure everything is the same architecture; 32-bit is going to be a better bet, but installers will want to give you 64-bit. We couldn't get this to work.
 
 ### Gentoo (TJ computers):
 
