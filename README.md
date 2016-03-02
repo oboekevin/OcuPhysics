@@ -1,9 +1,12 @@
 OcuPhysics
 ===========
 
-Model electric field vectors with Three.js and the Oculus Rift, with user interaction via the Leap Motion Controller. The following steps will set up the environment for both the 2015 and 2016 projects.
+Model electric field vectors with Three.js and the Oculus Rift, with integrated user interaction via the Leap Motion Controller.
 
 ## <a name="setup"></a>Environment Setup
+
+The following steps will set up the environment for both the 2015 and 2016 projects.
+
 * Windows is recommended
 * install **Visual Studio 2013** and use the VS command prompt
 * install Firefox, Leap Motion SDK, and Oculus Rift SDK 0.3.2-preview2
