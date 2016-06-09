@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<script src="three.js-master/build/three.min.js"></script>
+<script src="three.js-master/examples/js/controls/TrackballControls.js"></script>
+<script src="three.js-master/THREEx/THREEx.KeyboardState.js"></script>
+<script>
+
+    var scene, camera, renderer, controls, keyboard;
+    var geometry, material, mesh;
+    var clock = new THREE.Clock();
+    var speed = 20;
+
+    init();
+    animate();
+
+    function init() {
+    
+        scene = new THREE.Scene();
+
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+   		camera.position.set(50, -50, 40);
+    	camera.up = new THREE.Vector3(0,0,1);
+    	camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    	keyboard = new THREEx.KeyboardState();
+	controls = new THREE.TrackballControls( camera );
+
+	controls.rotateSpeed = 1.0;
+	controls.zoomSpeed = 1.2;
+	controls.panSpeed = 0.8;
+
+	controls.noZoom = false;
+	controls.noPan = false;
+
+	controls.staticMoving = true;
+	controls.dynamicDampingFactor = 0.3;
+
+	controls.keys = [ 65, 83, 68 ];
+
+	controls.addEventListener( 'change', render );
+	
+	var light = new THREE.PointLight( 0xffffff, 1, 400 );
+	light.position.set( 10, 10, 80 );
+	scene.add( light );
+	var light2 = new THREE.PointLight( 0xffffff, 1, 400 );
+	light2.position.set( -10, -10, -80 );
+	scene.add( light2 );
+
+
+	charge_list = []
+	charge_list.push(new PointCharge(scene, -10, -10, 0, 2, -10));
+	charge_list.push(new PointCharge(scene, 10, 10, 0, 2, 10));
+	charge_list.push(new PointCharge(scene, -10, -10, 20, 2, 10));
+	charge_list.push(new PointCharge(scene, -10, -10, -20, 2, 10));
+	charge_list.push(new PointCharge(scene, -20, -20, 3, 2, -5));
+
+	//scene.add(make_curve());
+
+	//make_arrow(scene, new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 0, 0), 10);
+
+	make_electric_field(scene, charge_list);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        document.body.appendChild( renderer.domElement );
+
+	//render();
+    }
+
+    function make_electric_field(s, charges) {
+        var k = 1;
+	    for (x = -30; x <= 30; x += 5) {
+
+	        for (y = -30; y <= 30; y += 5) {
+
+		    for (z = -15; z <= 15; z += 5) {
+		        var pos = new THREE.Vector3(x, y, z);
+			var net_field = new THREE.Vector3(0, 0, 0);
+			//console.log(net_field)
+
+			for (i = 0; i < charges.length; i+=20) {
+			    var r = new THREE.Vector3();
+			    r.subVectors(pos, charges[i].vec);
+			    var mag_r = r.length();
+			    //console.log(mag_r)
+			    var e = k * charges[i].charge / mag_r / mag_r / mag_r;
+			    r.multiplyScalar(e);
+			    net_field.add(r);
+			    //console.log(net_field)
+			}
+					
+			var e = net_field.length();
+			net_field.normalize();
+			//console.log("magnitude: " + e);
+			//console.log("direction: " + net_field);
+			make_arrow(s, pos, net_field, e * 17, e);
+	           }
+
+	       }
+		
+	   }
+	
+   }
+
+    function make_curve() {
+		var curve = new THREE.QuadraticBezierCurve3(
+		new THREE.Vector3(-10, -10, 0),
+		new THREE.Vector3(0, 0, 50),
+		new THREE.Vector3(10, 10, 0)
+		);
+		var path = new THREE.Path( curve.getPoints( 50 ) );
+		var geometry = path.createPointsGeometry( 50 );
+		geometry.vertices = curve.getPoints(50);
+		var material = new THREE.LineBasicMaterial( { color : 0xffffff } );
+		//Create the final Object3d to add to the scene
+		// var curveObject = new THREE.Line( geometry, material );
+		return new THREE.Line(geometry, material);
+	}
+
+    function make_arrow(s, origin, dir, length, hex) {
+		// var dir = new THREE.Vector3( 1, 0, 0 );
+		// var origin = new THREE.Vector3( 0, 0, 0 );
+		// var length = 10;
+		// var hex = 0x000000;
+		var arrowHelper = new THREE.ArrowHelper( dir, origin, length, 0xffffff, length / 3, length / 3);
+		s.add( arrowHelper );
+	}
+
+    function PointCharge(s, x0, y0, z0, r, q) {
+		this.scene = s;
+		this.x0 = x0;
+		this.y0 = y0;
+		this.z0 = z0;
+		this.vec = new THREE.Vector3(x0, y0, z0);
+		this.radius = r
+		this.charge = q
+		// make_axes(scene, r * 2, x0, y0, z0);
+		this.hex = (q < 0) ? 0x0000ff : 0xff0000;
+		make_sphere(scene, r, x0, y0, z0, this.hex);
+	}
+
+    function make_sphere(s, r, x0, y0, z0, hex) {
+		var s_geometry = new THREE.SphereGeometry( r, 32, 32 );		
+		//var s_material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+		var s_material = new THREE.MeshLambertMaterial( {color: hex} );
+		var sphere = new THREE.Mesh( s_geometry, s_material );
+		sphere.position.set(x0, y0, z0);
+		s.add( sphere );
+	}	
+
+    function animate() {
+
+	renderer.render( scene, camera );
+	requestAnimationFrame( animate );
+
+	//keyboard.update();
+	//var moveDistance = 50 * clock.getDelta(); 
+	if ( keyboard.pressed("up") )
+		camera.translateZ( -speed );
+		
+	if ( keyboard.pressed("down") )
+		camera.translateZ(  speed );
+
+	controls.update();
+
+	}
+
+	function render() {
+
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
