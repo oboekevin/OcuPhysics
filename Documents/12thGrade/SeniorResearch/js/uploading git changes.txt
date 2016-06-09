@@ -1,7 +1,0 @@
-uploading changes to git:
-
-git add --all
-
-git commit -m "insert note here"
-
-git push origin webvr
